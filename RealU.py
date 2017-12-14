@@ -7,7 +7,7 @@ app.config.from_pyfile('instance/RealU_Config.py')
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return '老婆大人起床了嘿嘿!'
 
 
 if __name__ == '__main__':
