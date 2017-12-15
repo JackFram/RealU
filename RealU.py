@@ -3,8 +3,7 @@ from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, session, redirect, url_for, abort, render_template, flash
 app = Flask(__name__)
-# app.config.from_object(os.environ['APP_CONFIG'])
-app.config.from_object('config.DebugConfig')
+app.config.from_object(os.environ['APP_SETTINGS'])
 
 db = SQLAlchemy(app)
 from sql import *
