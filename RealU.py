@@ -1,11 +1,12 @@
 import os
-import sqlite3
 from functools import wraps
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 app = Flask(__name__)
 # app.config.from_object(os.environ['APP_CONFIG'])
 app.config.from_object('config.DebugConfig')
 
+db = SQLAlchemy(app)
 
 def login_required(f):
     @wraps(f)
@@ -42,7 +43,6 @@ def login():
 
     # return render_template("login.html", error=error)
     return os.environ['DATABASE_URL']
-
 
 
 @app.route("/logout")
