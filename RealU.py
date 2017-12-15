@@ -1,12 +1,14 @@
 import os
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask import Flask, request, session, redirect, url_for, abort, render_template, flash
 app = Flask(__name__)
 # app.config.from_object(os.environ['APP_CONFIG'])
 app.config.from_object('config.DebugConfig')
 
 db = SQLAlchemy(app)
+from sql import *
+
 
 def login_required(f):
     @wraps(f)
@@ -22,7 +24,8 @@ def login_required(f):
 @app.route('/')
 @login_required
 def hello_world():
-    return render_template("index.html")
+    posts = db.session.query(BlogPost).all()
+    return render_template("index.html", posts=posts)
 
 
 @app.route('/welcome')
@@ -40,9 +43,7 @@ def login():
             session['logged_in'] = True
             flash("You have logged in!")
             return redirect(url_for("hello_world"))
-
-    # return render_template("login.html", error=error)
-    return os.environ['DATABASE_URL']
+    return render_template("login.html", error=error)
 
 
 @app.route("/logout")
