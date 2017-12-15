@@ -39,7 +39,10 @@ def login():
             session['logged_in'] = True
             flash("You have logged in!")
             return redirect(url_for("hello_world"))
-    return render_template("login.html", error=error)
+
+    # return render_template("login.html", error=error)
+    return os.environ['DATABASE_URL']
+
 
 
 @app.route("/logout")
