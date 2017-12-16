@@ -2,7 +2,11 @@ import os
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, session, redirect, url_for, abort, render_template, flash
+from flask_bcrypt import Bcrypt
+
+# create the application object
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 app.config.from_object(os.environ['APP_SETTINGS'])
 
 db = SQLAlchemy(app)

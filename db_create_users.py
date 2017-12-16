@@ -1,0 +1,10 @@
+from RealU import db
+from sql import User
+
+# insert data
+db.session.add(User("Michael", "zzz@qq.com", "you-will-never-know"))
+db.session.add(User("zhangzhihao", "erdos_zzh@163,com", "qweasdzxc"))
+
+
+# commit changes
+db.session.commit()

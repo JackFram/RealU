@@ -1,0 +1,2 @@
+export DATABASE_URL="postgresql://localhost/realu_db"
+export APP_SETTINGS="config.DebugConfig"
