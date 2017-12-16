@@ -1,5 +1,5 @@
-from RealU import db
-from sql import BlogPost
+from project import db
+from project.sql import BlogPost
 
 # create the database
 db.create_all()

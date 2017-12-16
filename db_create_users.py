@@ -1,5 +1,5 @@
-from RealU import db
-from sql import User
+from project import db
+from project.sql import User
 
 # insert data
 db.session.add(User("Michael", "zzz@qq.com", "you-will-never-know"))
