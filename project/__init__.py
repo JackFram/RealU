@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 import os
+from flask_mail import Mail
 
 ################
 #    config    #
@@ -18,6 +19,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
+mail = Mail(app)
+
 
 from project.users.views import users_blueprint
 from project.home.views import home_blueprint
