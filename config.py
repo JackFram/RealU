@@ -9,7 +9,7 @@ class BaseConfig(object):
     SECURITY_PASSWORD_SALT = 'sadhsajdasdjh!@#s12#S3123'
 
     # mail config
-    MAIL_SERVER = 'smtp.163.com'
+    MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
@@ -19,7 +19,7 @@ class BaseConfig(object):
     MAIL_PASSWORD = os.environ['APP_MAIL_PASSWORD']
 
     # mail accounts
-    MAIL_DEFAULT_SENDER = 'erdos_zzh@163.com'
+    MAIL_DEFAULT_SENDER = 'realuregister@gmail.com'
 
 
 class DebugConfig(BaseConfig):

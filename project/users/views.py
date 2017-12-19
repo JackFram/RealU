@@ -3,7 +3,7 @@ from flask import flash, redirect, render_template, request, \
 from project.users.form import LoginForm, RegisterForm
 from project import db
 from project.sql import User, bcrypt
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from project.token import generate_confirmation_token, confirm_token
 import datetime
 from project.email import send_email
@@ -87,3 +87,8 @@ def confirm_email(token):
         flash('You have confirmed your account. Thanks!', 'success')
     return redirect(url_for('home.home'))
 
+
+@users_blueprint.route("/<user>")
+@login_required
+def user_homepage(user):
+    return str(current_user.name)

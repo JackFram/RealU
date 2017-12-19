@@ -30,11 +30,9 @@ def home():
     else:
         posts = db.session.query(BlogPost).all()
         return render_template(
-            'index.html', posts=posts, form=form, error=error)
+            'index.html', posts=posts, form=form, error=error, user=current_user.name)
 
 
 @home_blueprint.route('/welcome')
 def welcome():
     return render_template("welcome.html")
-
-
