@@ -1,2 +1,4 @@
 export DATABASE_URL="postgresql://localhost/realu_db"
 export APP_SETTINGS="config.DebugConfig"
+os.environ['APP_MAIL_PASSWORD']
+os.environ['APP_MAIL_USERNAME']
