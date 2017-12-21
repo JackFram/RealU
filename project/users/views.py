@@ -26,8 +26,6 @@ def login():
             if user is not None and bcrypt.check_password_hash(user.password, request.form['password']):
                 login_user(user)
                 flash('You were logged in!')
-                if user.admin:
-                    return redirect(url_for('admin.admin_home'))
                 return redirect(url_for('home.home'))
             else:
                 error = 'Invalid Credentials. Please try again.'
