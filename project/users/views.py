@@ -11,7 +11,8 @@ from project.email import send_email
 # config
 users_blueprint = Blueprint(
     'users', __name__,
-    template_folder='templates'
+    template_folder='templates',
+    static_folder='statics'
 )
 
 
@@ -90,4 +91,4 @@ def confirm_email(token):
 @users_blueprint.route("/<user>")
 @login_required
 def user_homepage(user):
-    return str(current_user.name)
+    return render_template("user_homepage.html")
