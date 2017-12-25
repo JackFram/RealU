@@ -68,14 +68,8 @@ p, div {
       {% block content %}{% endblock %}
 
       <!-- errors -->
-      {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
-      {% endif %}
 
       <!-- messages -->
-      {% for message in get_flashed_messages() %}
-        {{ message }}
-      {% endfor %}
     </div>
     <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
     <script src="{{ url_for('static', filename="bootstrap.js") }}"></script>

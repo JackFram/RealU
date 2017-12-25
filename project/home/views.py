@@ -14,8 +14,7 @@ home_blueprint = Blueprint(
 # use decorators to link the function to a url
 @home_blueprint.route('/', methods=['GET', 'POST'])
 def home():
-    error = None
-    return render_template("index.html", error=error)
+    return render_template("index.html")
 
 
 @home_blueprint.route('/welcome')

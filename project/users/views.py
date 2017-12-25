@@ -1,5 +1,5 @@
 from flask import flash, redirect, render_template, request, \
-     url_for, Blueprint
+     url_for, Blueprint, session
 from project.users.form import LoginForm, RegisterForm
 from project import db
 from project.sql import User, bcrypt
@@ -26,8 +26,8 @@ def login():
             user = User.query.filter_by(name=request.form['username']).first()
             if user is not None and bcrypt.check_password_hash(user.password, request.form['password']):
                 login_user(user)
-                flash('You were logged in!')
-                return redirect(url_for('home.home'))
+                session['admin'] = user.admin
+                return redirect(url_for('users.user_homepage'))
             else:
                 error = 'Invalid Credentials. Please try again.'
     return render_template('login.html', form=form, error=error)
@@ -38,7 +38,8 @@ def login():
 def logout():
     logout_user()
     flash('You were logged out!')
-    return redirect(url_for("home.welcome"))
+    session.pop('admin', None)
+    return redirect(url_for("home.home"))
 
 
 @users_blueprint.route('/register', methods=['GET', 'POST'])   # pragma: no cover
@@ -65,7 +66,7 @@ def register():
 
         login_user(user)
         flash('A confirmation email has been sent via email.', 'success')
-        return redirect(url_for('home.home'))
+        return redirect(url_for('users.user_homepage'))
     return render_template('register.html', form=form)
 
 
@@ -88,7 +89,7 @@ def confirm_email(token):
     return redirect(url_for('home.home'))
 
 
-@users_blueprint.route("/<user>")
+@users_blueprint.route("/YourFile")
 @login_required
-def user_homepage(user):
-    return render_template("user_homepage.html")
+def user_homepage():
+    return render_template("user_homepage.html", user=current_user)
