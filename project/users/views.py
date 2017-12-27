@@ -11,8 +11,7 @@ from project.email import send_email
 # config
 users_blueprint = Blueprint(
     'users', __name__,
-    template_folder='templates',
-    static_folder='statics'
+    template_folder='templates'
 )
 
 

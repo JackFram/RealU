@@ -5,6 +5,20 @@
         {% if user.admin %}
         <li><a href="/admin">Admin</a></li>
         {% endif %}
+        <li role="presentation" class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        Settings <span class="caret"></span>
+        </a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Your profile</a></li>
+                <li><a href="#">Your stars</a></li>
+                <li><a href="#">Your account</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/settings/hello">Settings</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Forum</a></li>
+            </ul>
+        </li>
     </ul>
     <h3 class="text-muted">RealU</h3>
     <hr>

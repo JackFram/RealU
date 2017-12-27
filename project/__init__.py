@@ -28,7 +28,8 @@ mail = Mail(app)
 ################
 from project.users.views import users_blueprint
 from project.home.views import home_blueprint
-
+from project.client.views import client_blueprint
+from project.settings.views import settings_blueprint
 
 ################
 #    admin     #
@@ -39,6 +40,8 @@ from project.admin import *
 # register our blueprints
 app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
+app.register_blueprint(client_blueprint)
+app.register_blueprint(settings_blueprint, url_prefix='/settings')
 
 
 ################
