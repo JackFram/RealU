@@ -9,7 +9,8 @@ settings_blueprint = Blueprint(
 
 # route
 @settings_blueprint.route('/profile')
-def hello():
-    return
+def profile():
+    return "profile"
+
 
 
