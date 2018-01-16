@@ -18,7 +18,7 @@
 
 .container-narrow {
     margin: 0 auto;
-    max-width: 700px;
+    max-width: 85%;
 }
 
 .container-narrow > hr {
@@ -66,6 +66,9 @@ p, div {
 
       <!-- child template -->
       {% block content %}{% endblock %}
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
 
       <!-- errors -->
 

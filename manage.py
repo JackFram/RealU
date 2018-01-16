@@ -29,7 +29,7 @@ def create_admin():
     db.session.add(User(
         name="JackFram",
         email="erdos_zzh@163.com",
-        password="admin",
+        password="qweasdzxc",
         admin=True,
         confirmed=True,
         confirmed_on=datetime.datetime.now())

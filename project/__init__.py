@@ -41,7 +41,7 @@ from project.admin import *
 app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
 app.register_blueprint(client_blueprint)
-app.register_blueprint(settings_blueprint, url_prefix='/settings')
+app.register_blueprint(settings_blueprint, url_prefix="/settings")
 
 
 ################

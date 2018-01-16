@@ -10,11 +10,11 @@
         Settings <span class="caret"></span>
         </a>
             <ul class="dropdown-menu">
-                <li><a href="#">Your profile</a></li>
+                <li><a href="/settings/profile">Your profile</a></li>
                 <li><a href="#">Your stars</a></li>
                 <li><a href="#">Your account</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/settings/hello">Settings</a></li>
+                <li><a href="/settings/setting">Settings</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Forum</a></li>
             </ul>
@@ -22,4 +22,5 @@
     </ul>
     <h3 class="text-muted">RealU</h3>
     <hr>
+    {% block user_page %}{% endblock %}
 {% endblock %}

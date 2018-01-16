@@ -1,4 +1,4 @@
-from project.sql import User, BlogPost
+from project.sql import User
 from project import admin_page
 from flask_admin.contrib.sqla import ModelView
 from project import db
@@ -17,5 +17,4 @@ class RealUModelView(ModelView):
 
 
 admin_page.add_view(RealUModelView(User, db.session))
-admin_page.add_view(RealUModelView(BlogPost, db.session))
 
