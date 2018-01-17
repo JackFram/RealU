@@ -17,7 +17,11 @@ settings_blueprint = Blueprint(
 def profile():
     form = EditProfileForm()
     if request.method == 'POST' and form.validate_on_submit():
-        return form.avatar.data
+        user = User.query.filter_by(name=current_user.name).first()
+        user.introduction = request.form['introduction']
+        db.session.commit()
+        flash('更改成功！')
+        return render_template("profile.html", form=form, user=current_user)
     return render_template("profile.html", form=form, user=current_user)
 
 

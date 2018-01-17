@@ -17,9 +17,10 @@ class User(db.Model):
     admin = db.Column(db.Boolean, nullable=False, default=False)
     confirmed = db.Column(db.Boolean, nullable=False, default=False)
     confirmed_on = db.Column(db.DateTime, nullable=True)
+    introduction = db.Column(db.Text, nullable=True, default=False)
     img = db.Column(db.Binary(2000))
 
-    def __init__(self, name, email, password, confirmed, admin=False, confirmed_on=None, img=None):
+    def __init__(self, name, email, password, confirmed, admin=False, confirmed_on=None, introduction=None, img=None):
         self.name = name
         self.email = email
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -27,6 +28,7 @@ class User(db.Model):
         self.admin = admin
         self.confirmed = confirmed
         self.confirmed_on = confirmed_on
+        self.introduction = introduction
         self.img = img
 
     def is_authenticated(self):

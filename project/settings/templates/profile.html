@@ -1,8 +1,17 @@
-{% extends "user_homepage.html" %}
+{% extends "user_base.html" %}
 {% block user_page %}
     <form class="form-signin" role="form" method="post" action="">
+    <h3>输入个人介绍</h3>
     {{ form.csrf_token }}
-    {{ form.avatar(placeholder="your file") }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">admit</button>
+    <label for="introduction" class="sr-only">输入个人介绍</label>
+        {{ form.introduction(class="form-control", placeholder="") }}
+        <span class="error">
+        {% if form.introduction.errors %}
+            {% for error in form.introduction.errors %}
+            {{ error }}
+            {% endfor %}
+        {% endif %}
+        </span>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">确认更改</button>
     </form>
 {% endblock %}

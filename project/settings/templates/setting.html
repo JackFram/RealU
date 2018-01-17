@@ -1,13 +1,41 @@
-{% extends "user_homepage.html" %}
+{% extends "user_base.html" %}
 {% block user_page %}
-    <h3>修改密码</h3>
     <div class="col-lg-4">
         <form class="form-signin" role="form" method="post" action="">
+        <h2 class="form-signin-heading">修改密码</h2>
         {{ form.csrf_token }}
-            {{ form.password(placeholder="密码", class="form-control", autofocus="") }}
-            {{ form.confirm(placeholder="重新输入密码", class="form-control") }}
-            {{ form.new_password(placeholder="新设置的密码", class="form-control") }}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">admit</button>
-        </form>
+        <label for="old_password" class="sr-only">原密码</label>
+        {{ form.password(placeholder="原密码", class="form-control", autofocus="") }}
+        <span class="error">
+        {% if form.password.errors %}
+            {% for error in form.password.errors %}
+            {{ error }}
+            {% endfor %}
+        {% endif %}
+        </span>
+        <label for="new_password" class="sr-only">新密码</label>
+        {{ form.new_password(class="form-control", placeholder="新密码") }}
+        <span class="error">
+        {% if form.new_password.errors %}
+            {% for error in form.new_password.errors %}
+            {{ error }}
+            {% endfor %}
+        {% endif %}
+        </span>
+        <label for="confirm" class="sr-only">重复输入新设置的密码</label>
+        {{ form.confirm(class="form-control", placeholder="重复输入新设置的密码") }}
+        <span class="error">
+        {% if form.confirm.errors %}
+            {% for error in form.confirm.errors %}
+            {{ error }}
+            {% endfor %}
+        {% endif %}
+        </span>
+        {% if error %}
+        <b>{{ error }}</b>
+        {% endif %}
+    <br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">确定设置</button>
+    </form>
     </div>
 {% endblock %}
