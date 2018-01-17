@@ -1,5 +1,4 @@
 from project import db
-from project.home.form import MessageForm
 from flask import render_template, Blueprint, request, redirect, flash, url_for
 from flask_login import login_required, current_user
 
