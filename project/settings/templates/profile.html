@@ -1,5 +1,6 @@
 {% extends "user_base.html" %}
 {% block user_page %}
+    <div class="col-md-4">
     <form class="form-signin" role="form" method="post" action="">
     <h3>输入个人介绍</h3>
     {{ form.csrf_token }}
@@ -14,4 +15,5 @@
         </span>
     <button class="btn btn-lg btn-primary btn-block" type="submit">确认更改</button>
     </form>
+    </div>
 {% endblock %}

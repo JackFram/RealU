@@ -1,8 +1,13 @@
 from project import db
 from project import bcrypt
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
 import datetime
+from hashlib import md5
+
+
+followers = db.Table('followers',
+                     db.Column('follower_id', db.Integer, db.ForeignKey('users.id')),
+                     db.Column('followed_id', db.Integer, db.ForeignKey('users.id'))
+                     )
 
 
 class User(db.Model):
@@ -10,7 +15,7 @@ class User(db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False, unique=True)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String)
     registered_on = db.Column(db.DateTime, nullable=False)
@@ -19,6 +24,11 @@ class User(db.Model):
     confirmed_on = db.Column(db.DateTime, nullable=True)
     introduction = db.Column(db.Text, nullable=True, default=False)
     img = db.Column(db.Binary(2000))
+    followed = db.relationship('User', secondary=followers,
+                               primaryjoin=(followers.c.follower_id == id),
+                               secondaryjoin=(followers.c.followed_id == id),
+                               backref=db.backref('followers', lazy='dynamic'),
+                               lazy='dynamic')
 
     def __init__(self, name, email, password, confirmed, admin=False, confirmed_on=None, introduction=None, img=None):
         self.name = name
@@ -30,6 +40,18 @@ class User(db.Model):
         self.confirmed_on = confirmed_on
         self.introduction = introduction
         self.img = img
+
+    def follow(self, user):
+        if not self.is_following(user):
+            self.followed.append(user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.followed.remove(user)
+
+    def is_following(self, user):
+        return self.followed.filter(
+            followers.c.followed_id == user.id).count() > 0
 
     def is_authenticated(self):
         return True

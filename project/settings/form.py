@@ -9,6 +9,10 @@ class EditProfileForm(FlaskForm):
         validators=[DataRequired(), Length(max=60)]
     )
 
+    major = StringField(
+
+    )
+
 
 class UpdatePasswordForm(FlaskForm):
     password = PasswordField(
@@ -25,3 +29,4 @@ class UpdatePasswordForm(FlaskForm):
         'confirm',
         validators=[DataRequired(), EqualTo('new_password', message='Passwords must match.')]
     )
+

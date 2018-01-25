@@ -20,7 +20,7 @@ def profile():
         user = User.query.filter_by(name=current_user.name).first()
         user.introduction = request.form['introduction']
         db.session.commit()
-        flash('更改成功！')
+        flash('更改成功!')
         return render_template("profile.html", form=form, user=current_user)
     return render_template("profile.html", form=form, user=current_user)
 
@@ -41,5 +41,12 @@ def settings():
             return render_template("setting.html", form=form, user=current_user)
     return render_template("setting.html", form=form, user=current_user)
 
+
+@login_required
+@settings_blueprint.route('/follow', methods=["GET", "POST"])
+def follow():
+    current_user.follow(current_user)
+    db.session.commit()
+    return "1"
 
 
