@@ -1,17 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, FileField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 
 class EditProfileForm(FlaskForm):
-    introduction = StringField(
-        'introduction',
+    about_me = StringField(
+        'about_me',
         validators=[DataRequired(), Length(max=60)]
     )
 
-    major = StringField(
 
-    )
+class AvatarForm(FlaskForm):
+    file = FileField('上传图片：')
+    name = StringField('真实姓名：')
+    submit = SubmitField('提交')
 
 
 class UpdatePasswordForm(FlaskForm):

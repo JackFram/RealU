@@ -7,6 +7,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from project.token import generate_confirmation_token, confirm_token
 import datetime
 from project.email import send_email
+from werkzeug.urls import url_parse
 
 # config
 users_blueprint = Blueprint(
@@ -18,15 +19,20 @@ users_blueprint = Blueprint(
 # route
 @users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('users.user_homepage', username=current_user.name))
     error = None
     form = LoginForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
             user = User.query.filter_by(name=request.form['username']).first()
             if user is not None and bcrypt.check_password_hash(user.password, request.form['password']):
-                login_user(user)
+                login_user(user, remember=form.remember_me.data)
                 session['admin'] = user.admin
-                return redirect(url_for('users.user_homepage'))
+                next_page = request.args.get('next')
+                if not next_page or url_parse(next_page).netloc != '':
+                    next_page = url_for('users.user_homepage', username=user.name)
+                return redirect(next_page)
             else:
                 error = 'Invalid Credentials. Please try again.'
     return render_template('login.html', form=form, error=error)
@@ -65,7 +71,7 @@ def register():
 
         login_user(user)
         flash('A confirmation email has been sent via email.', 'success')
-        return redirect(url_for('users.user_homepage'))
+        return redirect(url_for('users.user_homepage', username=user.name))
     return render_template('register.html', form=form)
 
 
@@ -88,7 +94,8 @@ def confirm_email(token):
     return redirect(url_for('home.home'))
 
 
-@users_blueprint.route("/YourFile")
+@users_blueprint.route("/user/<username>")
 @login_required
-def user_homepage():
-    return render_template("user_homepage.html", user=current_user)
+def user_homepage(username):
+    user = User.query.filter_by(name=username).first_or_404()
+    return render_template("user_homepage.html", user=user)

@@ -1,6 +1,15 @@
 {% extends "user_base.html" %}
 {% block user_page %}
-    {% if user.introduction %}
-    {{ user.introduction }}
+    <h1>User: {{ user.name }}</h1>
+    {% if user.about_me %}
+        <p>{{ user.about_me }}</p>
+    {% endif %}
+    <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+    {% if user == current_user %}
+        <p><a href="{{ url_for('settings.profile') }}">Edit your profile</a></p>
+    {% elif not current_user.is_following(user) %}
+        <p><a href="{{ url_for('settings.follow', username=user.name) }}">Follow</a></p>
+    {% else %}
+        <p><a href="{{ url_for('settings.unfollow', username=user.name) }}">Unfollow</a></p>
     {% endif %}
 {% endblock %}

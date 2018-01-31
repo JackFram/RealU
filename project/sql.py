@@ -22,15 +22,15 @@ class User(db.Model):
     admin = db.Column(db.Boolean, nullable=False, default=False)
     confirmed = db.Column(db.Boolean, nullable=False, default=False)
     confirmed_on = db.Column(db.DateTime, nullable=True)
-    introduction = db.Column(db.Text, nullable=True, default=False)
-    img = db.Column(db.Binary(2000))
+    about_me = db.Column(db.Text, nullable=True, default=False)
+    img = db.Column(db.LargeBinary(length=2048))
     followed = db.relationship('User', secondary=followers,
                                primaryjoin=(followers.c.follower_id == id),
                                secondaryjoin=(followers.c.followed_id == id),
                                backref=db.backref('followers', lazy='dynamic'),
                                lazy='dynamic')
 
-    def __init__(self, name, email, password, confirmed, admin=False, confirmed_on=None, introduction=None, img=None):
+    def __init__(self, name, email, password, confirmed, admin=False, confirmed_on=None, about_me=None, img=None):
         self.name = name
         self.email = email
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -38,7 +38,7 @@ class User(db.Model):
         self.admin = admin
         self.confirmed = confirmed
         self.confirmed_on = confirmed_on
-        self.introduction = introduction
+        self.about_me = about_me
         self.img = img
 
     def follow(self, user):

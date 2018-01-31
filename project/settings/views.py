@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, flash
+from flask import Blueprint, request, render_template, flash, url_for, redirect
 from project.sql import User, bcrypt
 from project.settings.form import EditProfileForm, UpdatePasswordForm
 from flask_login import current_user, login_required
@@ -18,7 +18,7 @@ def profile():
     form = EditProfileForm()
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(name=current_user.name).first()
-        user.introduction = request.form['introduction']
+        user.about_me = request.form['about_me']
         db.session.commit()
         flash('更改成功!')
         return render_template("profile.html", form=form, user=current_user)
@@ -42,11 +42,33 @@ def settings():
     return render_template("setting.html", form=form, user=current_user)
 
 
+@settings_blueprint.route('/follow/<username>')
 @login_required
-@settings_blueprint.route('/follow', methods=["GET", "POST"])
-def follow():
-    current_user.follow(current_user)
+def follow(username):
+    user = User.query.filter_by(name=username).first()
+    if user is None:
+        flash('用户 {} 不存在.'.format(username))
+        return redirect(url_for('users.user_homepage', username=user.name))
+    if user == current_user:
+        flash('你不能关注自己!')
+        return redirect(url_for('users.user_homepage', username=user.name))
+    current_user.follow(user)
     db.session.commit()
-    return "1"
+    flash('你关注了{}!'.format(username))
+    return redirect(url_for('users.user_homepage', username=user.name))
 
 
+@settings_blueprint.route('/unfollow/<username>')
+@login_required
+def unfollow(username):
+    user = User.query.filter_by(name=username).first()
+    if user is None:
+        flash('用户 {} 不存在.'.format(username))
+        return redirect(url_for('users.user_homepage', username=user.name))
+    if user == current_user:
+        flash('你不能取消关注自己!')
+        return redirect(url_for('users.user_homepage', username=user.name))
+    current_user.unfollow(user)
+    db.session.commit()
+    flash('你取消了关注{}.'.format(username))
+    return redirect(url_for('users.user_homepage', username=user.name))

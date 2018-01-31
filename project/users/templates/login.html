@@ -23,6 +23,7 @@
             {% endfor %}
         {% endif %}
         </span>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
         {% if error %}
         <b>{{ error }}</b>
         {% endif %}
