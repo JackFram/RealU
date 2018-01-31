@@ -1,7 +1,6 @@
 from project import db
 from project import bcrypt
 import datetime
-from hashlib import md5
 
 
 followers = db.Table('followers',

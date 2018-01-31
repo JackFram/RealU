@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, flash, url_for, redirect
 from project.sql import User, bcrypt
-from project.settings.form import EditProfileForm, UpdatePasswordForm
+from project.settings.form import EditProfileForm, UpdatePasswordForm, AvatarForm
 from flask_login import current_user, login_required
 from project import db
 
@@ -21,8 +21,17 @@ def profile():
         user.about_me = request.form['about_me']
         db.session.commit()
         flash('更改成功!')
-        return render_template("profile.html", form=form, user=current_user)
-    return render_template("profile.html", form=form, user=current_user)
+        return render_template("profile.html", form=form)
+    return render_template("profile.html", form=form)
+
+
+@login_required
+@settings_blueprint.route('/upload', methods=["GET", "POST"])
+def upload():
+    form = AvatarForm()
+    if request.method == 'POST' and form.validate_on_submit():
+            return str(request.files['file'].read())
+    return render_template("follow.html", form=form)
 
 
 @login_required
@@ -35,11 +44,11 @@ def settings():
             user.password = bcrypt.generate_password_hash(request.form['new_password']).decode('utf-8')
             db.session.commit()
             flash("密码设置完毕!")
-            return render_template("setting.html", form=form, user=current_user)
+            return render_template("setting.html", form=form)
         else:
             flash("密码输入错误!")
-            return render_template("setting.html", form=form, user=current_user)
-    return render_template("setting.html", form=form, user=current_user)
+            return render_template("setting.html", form=form)
+    return render_template("setting.html", form=form)
 
 
 @settings_blueprint.route('/follow/<username>')

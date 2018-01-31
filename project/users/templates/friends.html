@@ -1,0 +1,9 @@
+{% extends "user_base.html" %}
+{% block user_page %}
+    <h1>Your potential friends: </h1><br>
+    {% for friend in friend_list %}
+        {% if friend.name != current_user.name %}
+        <h3><a href="{{ url_for("users.user_homepage", username=friend.name) }}">{{ friend.name }}</a></h3><br>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

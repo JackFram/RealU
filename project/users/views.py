@@ -52,8 +52,11 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if User.query.filter_by(email=form.email.data).first() is not None:
-            flash("This email has already been registered. Please use another one")
-            return render_template('register.html', form=form)
+            error = "This email has already been registered. Please use another one"
+            return render_template('register.html', form=form, error=error)
+        if User.query.filter_by(name=form.username.data).first() is not None:
+            error = "This name has already been registered. Please use another one"
+            return render_template('register.html', form=form, error=error)
         user = User(
             name=form.username.data,
             email=form.email.data,
@@ -99,3 +102,10 @@ def confirm_email(token):
 def user_homepage(username):
     user = User.query.filter_by(name=username).first_or_404()
     return render_template("user_homepage.html", user=user)
+
+
+@users_blueprint.route("/friends")
+@login_required
+def friends():
+    friend_list = User.query.all()
+    return render_template("friends.html", friend_list=friend_list)

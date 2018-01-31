@@ -1,7 +1,10 @@
 {% extends "user_log.html" %}
 
 {% block user_log %}
-
+    <ul class="nav nav-pills pull-right">
+        <li><a href="{{ url_for('home.home') }}">返回</a></li>
+    </ul>
+    <h3 class="text-muted">RealU</h3>
     <form class="form-signin" role="form" method="post" action="">
     <h2 class="form-signin-heading">Please sign in</h2>
     {{ form.csrf_token }}

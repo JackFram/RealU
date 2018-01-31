@@ -1,3 +1,8 @@
 {% extends "user_base.html" %}
 {% block user_page %}
+    <form action="" method="post" name="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.file.label }}  {{ form.file }}
+        {{ form.submit }}
+    </form>
 {% endblock %}
